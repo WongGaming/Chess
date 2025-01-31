@@ -8,24 +8,24 @@ namespace ChessLogic
 {
     public class RegularMove : MovementBaseClass
     {
-        public override Movement Type => Movement.Normal;
+        public override MovementType Type => MovementType.Normal;
         public override Position StartingPos { get; }
         public override Position EndingPos { get; }
-        public RegularMove(Position start, Position end)
+        public RegularMove(Position start, Position end) //constructor
         {
             StartingPos = start;
             EndingPos = end;
         }
         public override void ApplyMove(Board board) //makes the move happen
         {
-            // Retrieve the piece from the starting position
+            //retrieve the piece from the starting position
             Piece movingPiece = board[StartingPos];
 
-            // Update the board with the new positions
+            //update the board with the new positions
             board[EndingPos] = movingPiece; 
             board[StartingPos] = null;
 
-            // Mark the piece as having moved
+            //mark the piece as having moved
             if (movingPiece != null)
             {
                 movingPiece.MarkAsMoved();

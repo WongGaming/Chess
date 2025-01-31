@@ -10,16 +10,16 @@ namespace ChessLogic
     {
         public Player Winner { get; }
         public GameOverReason Reason { get; }  
-        public GameOver(Player winner, GameOverReason reason)
+        public GameOver(Player winner, GameOverReason reason) //constructor
         {
             Winner = winner;
             Reason = reason;
         }  
-        public static GameOver Win(Player winner)
+        public static GameOver Win(Player winner) //returns the winner and the reason - always checkmate
         {
             return new GameOver(winner, GameOverReason.Checkmate);
         }
-        public static GameOver Draw(GameOverReason reason)
+        public static GameOver Draw(GameOverReason reason) //doesn't return a particular player but returns the reason for draw (4)
         {
             return new GameOver(Player.None, reason);
         }

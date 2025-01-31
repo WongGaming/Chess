@@ -11,46 +11,41 @@ namespace ChessLogic
         public Board Board { get; }
         public Player CurrentPlayer { get; private set; }
         public GameOver GameOver { get; private set; } = null;
-        public GameState (Player player, Board board)
+        public GameState (Player player, Board board) //constructor
         {
             CurrentPlayer = player;
             Board = board;
         }
-        public List<MovementBaseClass> LegalMoves(Position position, int depth)
+        public List<MovementBaseClass> LegalMoves(Position position, int depth) //depth-first search, returns list of legal moves
         {
-            // Base case: if depth is zero, stop recursion
+            //base case: if depth is zero, stop recursion
             if (depth == 0)
             {
                 return new List<MovementBaseClass>();
             }
 
-            // If the position is invalid (empty or not the current player's piece), return an empty list
+            //if the position is invalid (empty or not the current player's piece), return an empty list
             if (Board.IsEmpty(position) || Board[position].Colour != CurrentPlayer)
             {
                 return new List<MovementBaseClass>();
             }
 
-            // Get the piece at the current position
+            //get the piece at the current position
             Piece piece = Board[position];
             List<MovementBaseClass> possibleMoves = piece.GetMove(Board, position).ToList();
             List<MovementBaseClass> legalMoves = new List<MovementBaseClass>();
-
-            // Iterate through possible moves
+            //iterate through possible moves
             foreach (var move in possibleMoves)
             {
-                if (move.Legal(Board)) // Check if the move is legal
+                if (move.Legal(Board)) //check if the move is legal
                 {
-                    legalMoves.Add(move); // Add to the legal moves list
-
-                    // Simulate the move by calling the ApplyMove function on the piece's move
-                    var simulatedBoard = Board.Copy(); // Assuming Board.Clone creates a deep copy
-                    move.ApplyMove(simulatedBoard); // Apply the move using the existing ApplyMove method
-
-                    // Recursively explore further moves from this new board state
-                    var nextPosition = move.EndingPos; // Assuming the move knows its destination
+                    legalMoves.Add(move); //add to the legal moves list
+                    //simulate the move by calling the ApplyMove function on the piece's move
+                    var simulatedBoard = Board.Copy(); 
+                    move.ApplyMove(simulatedBoard); //apply the move
+                    //recursively explore further moves from this new board state
+                    var nextPosition = move.EndingPos;
                     var deeperMoves = new Game(simulatedBoard).LegalMoves(nextPosition, depth - 1);
-
-                    // Optionally, combine deeper moves into the result (e.g., for scoring or evaluation)
                     legalMoves.AddRange(deeperMoves);
                 }
             }
@@ -69,57 +64,59 @@ namespace ChessLogic
         {
             IEnumerable<MovementBaseClass> possibleMoves = Board.PiecePositionsFor(player).SelectMany(position =>
             {
-                Piece piece = Board[position];
-                return piece.GetMove(Board, position);
+                Piece piece = Board[position]; //get piece at current position
+                return piece.GetMove(Board, position); //get all possible moves for that piece
             });
-            return possibleMoves.Where(move => move.Legal(Board));
+            return possibleMoves.Where(move => move.Legal(Board)); //filters out illegal moves
         }
-        private void CheckForGameOver()
+        private void CheckForGameOver() //checks to see if game is over
         {
-            if (LegalMovesFor(CurrentPlayer).Any())
+            if (!LegalMovesFor(CurrentPlayer).Any()) //if current player has no legal moves left
             {
-                 if (Board.InCheck(CurrentPlayer))
+                if (Board.InCheck(CurrentPlayer))
                 {
-                     GameOver = GameOver.Win(CurrentPlayer.Opponent());
+                     GameOver = GameOver.Win(CurrentPlayer.Opponent()); //opponent wins 
                 }
                 else
                 {
-                    GameOver = GameOver.Draw(GameOverReason.StaleMate);
+                    GameOver = GameOver.Draw(GameOverReason.Stalemate); //its a draw due to stalemate
+                    //ONLY FOR STALEMATE AT THE MOMENT
+                    //WILL NEED TO CHANGE FOR OTHER GAME OVER REASONS
                 }
             }
         }
-        public bool GameIsOver()
+        public bool GameIsOver() //returns whether game is over or not
         {
             return GameOver != null;
         }
 
         public IEnumerable<MovementBaseClass> LegalMoves(Position position)
         {
-            // Check if the position is valid (i.e., contains a piece belonging to the current player)
+            //check if the position is valid (i.e., contains a piece belonging to the current player)
             if (Board.IsEmpty(position) || Board[position].Colour != CurrentPlayer)
             {
-                return Enumerable.Empty<MovementBaseClass>(); // Return an empty list if the position is invalid
+                return Enumerable.Empty<MovementBaseClass>(); //return an empty list if the position is invalid
             }
 
-            // Get the piece at the given position
+            //get the piece at the given position
             Piece piece = Board[position];
 
-            // Get all possible moves for the piece (you can adjust this method to match your logic)
+            //get all possible moves for the piece (you can adjust this method to match your logic)
             var possibleMoves = piece.GetMove(Board, position);
 
-            // Filter the possible moves to include only those that are legal
+            //filter the possible moves to include only those that are legal
             List<MovementBaseClass> legalMoves = new List<MovementBaseClass>();
 
             foreach (var move in possibleMoves)
             {
-                // Assuming that the `Legal` method checks if the move is actually legal on the board
+                //assuming that the `Legal` method checks if the move is actually legal on the board
                 if (move.Legal(Board))
                 {
-                    legalMoves.Add(move); // Add the move to the list of legal moves
+                    legalMoves.Add(move); //add the move to the list of legal moves
                 }
             }
 
-            // Return the list of legal moves
+            //return the list of legal moves
             return legalMoves;
         }
     }

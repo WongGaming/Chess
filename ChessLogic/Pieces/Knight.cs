@@ -31,8 +31,8 @@ namespace ChessLogic
             {
                 foreach (Direction horizontaldir in new Direction[] {Direction.East, Direction.West })
                 {
-                    yield return start + 2 * verticaldir + horizontaldir;
-                    yield return start + 2 * horizontaldir + verticaldir;
+                    yield return start + (2 * verticaldir) + horizontaldir;
+                    yield return start + (2 * horizontaldir) + verticaldir;
                     // ^^returns all 8 potential places knight can move to 
                 }
             }

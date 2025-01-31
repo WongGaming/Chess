@@ -21,12 +21,12 @@ namespace ChessLogic
             set { this[position.Row, position.Column] = value; }
         }
 
-        public static Board Initially()
+        public static Board Initially()//initialises board
         {
             Board board = new Board();
             board.AddInitialPieces();
             return board;
-        } //initialises board
+        } 
 
         private void AddInitialPieces() //adds pieces onto board at beginning of game
         {
@@ -57,7 +57,7 @@ namespace ChessLogic
                 }
             }
         }
-        public static bool IsInside(Position position)
+        public static bool IsInside(Position position) //checks to see if position is inside board
         {
             bool isRowValid = position.Row >= 0 && position.Row < 8;//check if the row is within the valid range
             bool isColumnValid = position.Column >= 0 && position.Column < 8;//check if the column is within the valid range 
@@ -118,7 +118,7 @@ namespace ChessLogic
             }
             return false;//if no piece can capture the king, the player is not in check
         }
-        public Board Copy()
+        public Board Copy()//creates a copy of board to help in finding illegal moves
         {
             Board copy = new Board();
             foreach (Position position in PositionsOfPiece())
@@ -126,6 +126,6 @@ namespace ChessLogic
                 copy[position] = this[position].Copy();
             }
             return copy;
-        } //creates a copy of board to help in finding illegal moves
+        } 
     }
 }

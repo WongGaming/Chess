@@ -38,9 +38,9 @@ namespace ChessLogic
             unchecked
             {
                 value = (value ^ 79 ) ^ (value >> 16); //XOR followed by right shift of 16
-                value = value + (value << 4);
-                value = value ^ (value >> 8);
-                value = (int)(value * 0x9e3779b9);
+                value = value + (value << 4); //left shift 4
+                value = value ^ (value >> 8); //right shift 8
+                value = (int)(value * 0x9e3779b9); 
                 value = value ^ (value >> 16);
                 return value;
             }

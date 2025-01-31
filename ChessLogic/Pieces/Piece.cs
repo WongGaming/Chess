@@ -7,39 +7,39 @@ using System.Threading.Tasks;
 
 namespace ChessLogic
 {
-    public abstract class Piece
+    public abstract class Piece //all pieces inherit from this class
     {
         public abstract PieceType Type { get; }
         public abstract Player Colour { get; }
-        public bool Moved { get; private set; } // Assuming 'Moved' is a property
-
-        // Other properties and methods of the Piece class
-
-        // Method to mark the piece as moved
-        public void MarkAsMoved()
+        public bool Moved { get; private set; }
+        public void MarkAsMoved()//method to mark the piece as moved
         {
             Moved = true;
         }
 
 
-        public abstract Piece Copy();
+        public abstract Piece Copy(); //overriden in other classes to copy all pieces 
+        //allows board class to create a copy of the board to check for illegal moves
 
         public abstract IEnumerable<MovementBaseClass> GetMove ( Board board, Position start);
         // ^^takes current position and board and return all the available moves for the piece
         protected IEnumerable<Position> MovePositionsInDirection(Board board, Direction direction, Position start)
         {
             for (Position position = start + direction; Board.IsInside(position); position += direction)
+            //piece moves one step at a time in the given direction 
+            //loops as far as a piece can go until it reaches the edges of the board
             {
-                if (board.IsEmpty(position))
+                if (board.IsEmpty(position)) //if that cell is empty, it is a valid move
                 {
                     yield return position;
-                    continue;
+                    continue; //skips the rest of the loop and moves onto next position
                 }
                 Piece piece = board[position];
-                if (piece.Colour != Colour)
+                if (piece.Colour != Colour) //checks to see if 
+
                 {
                     yield return position;
-                    // ^^checks to see if the piece is the same colour as theirs or if its an opponents piece
+                    
                 }
                 yield break;
             }

@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace ChessUI
 {
-    internal class Choices
+    public enum Choices
     {
+        Restart,
+        Exit,
+        Continue
     }
 }

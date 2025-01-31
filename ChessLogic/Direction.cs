@@ -19,12 +19,12 @@ namespace ChessLogic
         public readonly static Direction SouthWest = South + West;
         public int ChangeInRowNum { get; }
         public int ChangeInColumnNum { get; }
-
-        public Direction (int numChangeRow, int numChangeColumn)
+        //store how much a piece can move in a given direction
+        public Direction (int numChangeRow, int numChangeColumn)//constructor
         {
             ChangeInRowNum = numChangeRow;
             ChangeInColumnNum = numChangeColumn;
-        }
+        } 
 
         //'overwriting' the plus and multiply commands to increase efficiency later on for piece movements
         public static Direction operator + (Direction dir1, Direction dir2)

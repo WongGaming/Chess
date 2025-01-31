@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ChessLogic
 {
-    public enum Movement
+    public enum MovementType 
     {
         Normal,
         CastleKing,

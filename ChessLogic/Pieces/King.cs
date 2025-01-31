@@ -28,10 +28,10 @@ namespace ChessLogic
         public override Piece Copy()
         {
             King copy = new King(Colour);
-            // Copy the moved state from the current piece
+            //copy the moved state from the current piece
             if (Moved)
             {
-                copy.MarkAsMoved(); // Set the moved state on the copy
+                copy.MarkAsMoved(); //set the moved state on the copy
             }
 
             return copy;

@@ -12,7 +12,7 @@ namespace ChessUI
 {
     public static class Images
     {
-        private static readonly Dictionary<PieceType, ImageSource> whiteSources = new()
+        private static readonly Dictionary<PieceType, ImageSource> whiteSources = new()//loads white pieces
         {
             {PieceType.Pawn,LoadImage("Assets/PawnW.png") },
             {PieceType.Bishop,LoadImage("Assets/BishopW.png") },
@@ -21,7 +21,7 @@ namespace ChessUI
             {PieceType.Queen,LoadImage("Assets/QueenW.png") },
             {PieceType.King,LoadImage("Assets/KingW.png") }
         };
-        private static readonly Dictionary<PieceType, ImageSource> blackSources = new()
+        private static readonly Dictionary<PieceType, ImageSource> blackSources = new() //loads black pieces
         {
             {PieceType.Pawn,LoadImage("Assets/PawnB.png") },
             {PieceType.Bishop,LoadImage("Assets/BishopB.png") },

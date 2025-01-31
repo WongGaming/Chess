@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace ChessLogic
 {
-    public enum GameOverReason
+    public enum GameOverReason //different ways a game could end
     {
-        InSufficientMaterial,
-        ThreefoldRepetition,
-        FiftyMoveRule,
-        StaleMate,
-        Checkmate
+        Checkmate, //win
+        Stalemate, //draw
+        FiftyMoveRule, //draw
+        InsufficientMaterial, //draw
+        ThreefoldRepetition //draw
     }
 }

@@ -18,24 +18,32 @@ namespace ChessLogic
             Direction.NorthEast,
             Direction.NorthWest,
         };
-        public Bishop(Player colour)
+        public Bishop(Player colour) //constructor
         {
             Colour = colour;
         }
-        public override Piece Copy()
+        public override Piece Copy() //referenced in board class to make a copy of the board so that illegal moves can be found
         {
             Bishop copy = new Bishop(Colour);
-            // Copy the moved state from the current piece
+            //makes a new instance of a bishop with the same colour as the original bishop
             if (Moved)
             {
-                copy.MarkAsMoved(); // Set the moved state on the copy
+                copy.MarkAsMoved(); //set the moved state on the copy
             }
 
             return copy;
         }
         public override IEnumerable<MovementBaseClass> GetMove(Board board, Position start)
         {
-            return (IEnumerable < MovementBaseClass > ) MovePositionsInDirections(board, directions, start).Select(end => new RegularMove(start, end));
+            List<MovementBaseClass> possibleMoves = new List<MovementBaseClass>(); //list to store all possible moves
+            IEnumerable<Position> movePositions = MovePositionsInDirections(board, directions, start);//get all possible positions the piece can move to based on its movement directions
+            foreach (Position end in movePositions)//iterate over each valid position
+            {
+                RegularMove move = new RegularMove(start, end);//create a new move from the start position to the end position
+                possibleMoves.Add(move);//add the move to the list of possible moves
+            }
+            //return list of possible moves
+            return possibleMoves;
         }
     }
 }
