@@ -168,6 +168,11 @@ namespace ChessUI
         {
             return MenuContainer.Content != null;
         } //returns whether menu is on screen or not
+        private void DisplayMenu()
+        {
+            InGameMenu inGamemenu = new InGameMenu(gameState);
+
+        }
         private void DisplayGameOver()
         {
             GameOverMenu gameOverMenu = new GameOverMenu(gameState);
@@ -187,7 +192,7 @@ namespace ChessUI
         }
         private void RestartGame()
         {
-            HideHighlightedCells(); //stps highlighting cells
+            HideHighlightedCells(); //stops highlighting cells
             movementCache.Clear(); //clears movement cache
             gameState = new GameState(Player.White,Board.Initially());
             DrawBoard(gameState.Board);
